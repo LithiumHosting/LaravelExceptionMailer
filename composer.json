@@ -1,0 +1,27 @@
+{
+    "name": "lithiumdev/laravel-exception-mailer",
+    "description": "Receive an email whenever laravel throws an exception",
+    "keywords": [
+        "laravel",
+        "exception",
+        "exception mailer"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Troy Siedsma",
+            "company": "Lithium Hosting, llc",
+            "email": "tsiedsma@lithiumhosting.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "illuminate/support": "~5.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "LithiumDev\\ExceptionMailer\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
