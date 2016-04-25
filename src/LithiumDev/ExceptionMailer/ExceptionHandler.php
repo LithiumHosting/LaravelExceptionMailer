@@ -18,15 +18,25 @@ class ExceptionHandler extends Handler
     {
         parent::report($e);
 
-        $this->prevent_exception = config('laravel-exception-mailer.config.prevent_exception');
-        $shouldReport            = true;
+        $reportableEnvironments = config('laravel-exception-mailer.config.notify_environment');
+        if (is_array($reportableEnvironments) && in_array(app()->environment(), $reportableEnvironments))
+        {
+            $nonReportableExceptions  = config('laravel-exception-mailer.config.prevent_exception');
+            $shouldReport = true;
 
-        foreach ($this->prevent_exception as $type) {
-            if ($e instanceof $type) $shouldReport = false;
-        }        
-        if ($shouldReport) {
-            $bugonemail = App::make('ExceptionMailer');
-            $bugonemail->notifyException($e);
+            foreach ($nonReportableExceptions as $class)
+            {
+                if ($e instanceof $class)
+                {
+                    $shouldReport = false;
+                }
+            }
+
+            if ($shouldReport)
+            {
+                $eMailer = App::make('ExceptionMailer');
+                $eMailer->notifyException($e);
+            }
         }
     }
 }
