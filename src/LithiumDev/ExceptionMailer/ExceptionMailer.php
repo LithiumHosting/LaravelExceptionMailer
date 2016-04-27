@@ -30,17 +30,17 @@ class ExceptionMailer {
         if (! empty($this->env))
         {
             $request                   = array();
-            $request['fullUrl']        = Request::fullUrl();
-            $request['input_get']      = $_GET;
-            $request['input_post']     = $_POST;
-            $request['input_old']      = Request::old();
-            $request['session']        = \Session::all();
-            $request['cookie']         = Request::cookie();
-            $request['file']           = Request::file();
-            $request['header']         = Request::header();
-            $request['server']         = Request::server();
-            $request['json']           = Request::json();
-            $request['request_format'] = Request::format();
+            $request['fullUrl']        = (! \App::runningInConsole()) ? Request::fullUrl() : null;
+            $request['input_get']      = (! \App::runningInConsole()) ? $_GET : [];
+            $request['input_post']     = (! \App::runningInConsole()) ? $_POST : [];
+            $request['input_old']      = (! \App::runningInConsole()) ? Request::old() : [];
+            $request['session']        = (! \App::runningInConsole()) ? \Session::all() : [];
+            $request['cookie']         = (! \App::runningInConsole()) ? Request::cookie() : [];
+            $request['file']           = (! \App::runningInConsole()) ? Request::file() : [];
+            $request['header']         = (! \App::runningInConsole()) ? Request::header() : [];
+            $request['server']         = (! \App::runningInConsole()) ? Request::server() : [];
+            $request['json']           = (! \App::runningInConsole()) ? Request::json() : [];
+            $request['request_format'] = (! \App::runningInConsole()) ? Request::format() : null;
             $request['error']          = $exception->getTraceAsString();
             $request['subject_line']   = $exception->getMessage();
             $request['class_name']     = get_class($exception);
@@ -52,7 +52,9 @@ class ExceptionMailer {
                     {
                         $message->to($recipient['address'], $recipient['name']);
                     }
-                    $message->subject("{$this->config['subject']} - URL: " . $request['fullUrl']);
+
+                    $subject = (! \App::runningInConsole()) ? "URL: " . $request['fullUrl'] : " CLI Command Failure";
+                    $message->subject("{$this->config['subject']} - " . $subject);
                 });
             }
         }
