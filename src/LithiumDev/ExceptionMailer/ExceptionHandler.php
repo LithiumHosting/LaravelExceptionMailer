@@ -32,6 +32,15 @@ class ExceptionHandler extends Handler
                 }
             }
 
+            /*
+             * If maintenance mode is enabled, a 500 error will be displayed instead of the error page
+             * Skip the mailer in this one instance
+             */
+            if (app()->isDownForMaintenance())
+            {
+                $shouldReport = false;
+            }
+
             if ($shouldReport)
             {
                 $eMailer = App::make('ExceptionMailer');
