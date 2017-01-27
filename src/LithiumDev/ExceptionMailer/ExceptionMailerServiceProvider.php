@@ -1,5 +1,4 @@
 <?php
-
 namespace LithiumDev\ExceptionMailer;
 
 
@@ -22,8 +21,8 @@ class ExceptionMailerServiceProvider extends ServiceProvider {
     {
         $this->publishes([
             __DIR__ . '/../../config/config.php' => config_path('laravel-exception-mailer/config.php'),
-            __DIR__ . '/../../views' => base_path('resources/views/vendor/laravel-exception-mailer'),
-            ]);
+            __DIR__ . '/../../views'             => base_path('resources/views/vendor/laravel-exception-mailer'),
+        ]);
         $this->loadViewsFrom(__DIR__ . '/../../views', 'laravel-exception-mailer');
 
         $this->app->singleton('Illuminate\Contracts\Debug\ExceptionHandler', 'LithiumDev\ExceptionMailer\ExceptionHandler');

@@ -1,6 +1,6 @@
 <?php
-
 namespace LithiumDev\ExceptionMailer\Facades;
+
 
 use Illuminate\Support\Facades\Facade;
 
@@ -11,7 +11,8 @@ class ExceptionMailerFacade extends Facade {
      *
      * @return string
      */
-    protected static function getFacadeAccessor() {
+    protected static function getFacadeAccessor()
+    {
         return 'ExceptionMailer';
     }
 
