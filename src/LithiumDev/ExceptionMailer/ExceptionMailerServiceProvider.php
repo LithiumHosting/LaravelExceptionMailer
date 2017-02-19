@@ -39,18 +39,6 @@ class ExceptionMailerServiceProvider extends ServiceProvider {
             __DIR__ . '/../../config/config.php', 'laravel-exception-mailer.config'
         );
 
-        $this->app['ExceptionMailer'] = $this->app->share(function ($app)
-        {
-            $config  = $app['config']['laravel-exception-mailer']['config'];
-            $eMailer = new ExceptionMailer($config);
-
-            if (in_array($app->environment(), $config['notify_environment']))
-            {
-                $eMailer->setEnvironment($app->environment());
-            }
-
-            return $eMailer;
-        });
         $this->app->singleton('ExceptionMailer',
             function ($app)
             {
