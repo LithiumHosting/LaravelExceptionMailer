@@ -2,18 +2,18 @@
 namespace LithiumDev\ExceptionMailer;
 
 
-use Exception;
+use Throwable;
 use App\Exceptions\Handler;
 
 class ExceptionHandler extends Handler {
 
     /**
      *
-     * @param Exception $e
+     * @param Throwable $e
      *
      * @return type
      */
-    public function report(Exception $e)
+    public function report(Throwable $e)
     {
         parent::report($e);
 
